@@ -1,0 +1,16 @@
+diff --git a/esp-dl/dl/model/src/dl_model_context.cpp b/esp-dl/dl/model/src/dl_model_context.cpp
+index 171b7fb3..c4d77fe2 100644
+--- a/esp-dl/dl/model/src/dl_model_context.cpp
++++ b/esp-dl/dl/model/src/dl_model_context.cpp
+@@ -168,7 +168,10 @@ bool ModelContext::root_alloc(size_t internal_size, size_t psram_size, int align
+     }
+ 
+     if (m_internal_size > 0) {
+-        m_internal_root = tool::calloc_aligned(m_internal_size, 1, MALLOC_CAP_INTERNAL);
++        // MALLOC_CAP_8BIT wajib ditambahkan: pada ESP32 klasik, sisa IRAM ikut masuk heap
++        // internal, padahal IRAM hanya bisa diakses 32-bit. Tanpa flag ini, buffer model
++        // bisa mendarat di IRAM dan akses per byte memicu LoadStoreError.
++        m_internal_root = tool::calloc_aligned(m_internal_size, 1, MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
+ 
+         if (!m_internal_root) {
+             ESP_LOGE(TAG,

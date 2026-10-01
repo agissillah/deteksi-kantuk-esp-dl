@@ -1,0 +1,25 @@
+# Environment Python 3.11 khusus esp-ppq (± 900 MB, dibuat ulang dengan pip)
+env_quant/
+
+# Hasil build ESP-IDF dan komponen yang diunduh otomatis
+firmware/build/
+firmware/managed_components/
+firmware/sdkconfig.old
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# File antara yang bisa dibuat ulang dari skrip
+kalibrasi.npy
+data_uji.npz
+eyenet.json
+eyenet.info
+laporan_salah_label.png
+laporan_salah_label.txt
+
+# Dataset versi lama (potongan Haar Cascade), sudah tidak dipakai
+dataset_lama_haar/
+
+# Haar Cascade sudah diganti YuNet, tidak dipakai lagi
+models/haarcascade_*.xml
